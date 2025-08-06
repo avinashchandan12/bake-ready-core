@@ -14,7 +14,354 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      expenses: {
+        Row: {
+          amount: number
+          category: string
+          date: string
+          id: string
+          remarks: string | null
+        }
+        Insert: {
+          amount: number
+          category: string
+          date?: string
+          id?: string
+          remarks?: string | null
+        }
+        Update: {
+          amount?: number
+          category?: string
+          date?: string
+          id?: string
+          remarks?: string | null
+        }
+        Relationships: []
+      }
+      product_raw_materials: {
+        Row: {
+          id: string
+          product_id: string
+          quantity: number
+          raw_material_id: string
+        }
+        Insert: {
+          id?: string
+          product_id: string
+          quantity: number
+          raw_material_id: string
+        }
+        Update: {
+          id?: string
+          product_id?: string
+          quantity?: number
+          raw_material_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_raw_materials_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "product_raw_materials_raw_material_id_fkey"
+            columns: ["raw_material_id"]
+            isOneToOne: false
+            referencedRelation: "raw_materials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      production_batches: {
+        Row: {
+          batch_date: string
+          id: string
+          operator_id: string | null
+          product_id: string
+          quantity: number
+          remarks: string | null
+        }
+        Insert: {
+          batch_date?: string
+          id?: string
+          operator_id?: string | null
+          product_id: string
+          quantity: number
+          remarks?: string | null
+        }
+        Update: {
+          batch_date?: string
+          id?: string
+          operator_id?: string | null
+          product_id?: string
+          quantity?: number
+          remarks?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "production_batches_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          id: string
+          name: string
+          price: number
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name: string
+          price: number
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          name?: string
+          price?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          role?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      purchase_items: {
+        Row: {
+          id: string
+          purchase_id: string
+          quantity: number
+          raw_material_id: string
+          unit_price: number
+        }
+        Insert: {
+          id?: string
+          purchase_id: string
+          quantity: number
+          raw_material_id: string
+          unit_price: number
+        }
+        Update: {
+          id?: string
+          purchase_id?: string
+          quantity?: number
+          raw_material_id?: string
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchase_items_purchase_id_fkey"
+            columns: ["purchase_id"]
+            isOneToOne: false
+            referencedRelation: "purchases"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "purchase_items_raw_material_id_fkey"
+            columns: ["raw_material_id"]
+            isOneToOne: false
+            referencedRelation: "raw_materials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      purchases: {
+        Row: {
+          created_at: string
+          id: string
+          purchase_date: string
+          total_amount: number
+          vendor_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          purchase_date?: string
+          total_amount: number
+          vendor_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          purchase_date?: string
+          total_amount?: number
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "purchases_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      raw_materials: {
+        Row: {
+          created_at: string
+          id: string
+          name: string
+          reorder_level: number
+          stock_quantity: number
+          unit: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          name: string
+          reorder_level?: number
+          stock_quantity?: number
+          unit: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          name?: string
+          reorder_level?: number
+          stock_quantity?: number
+          unit?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      sales: {
+        Row: {
+          created_at: string
+          id: string
+          product_id: string
+          quantity: number
+          sale_date: string
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          product_id: string
+          quantity: number
+          sale_date?: string
+          unit_price: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          product_id?: string
+          quantity?: number
+          sale_date?: string
+          unit_price?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sales_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vendor_products: {
+        Row: {
+          id: string
+          last_supplied: string | null
+          raw_material_id: string
+          unit_price: number
+          vendor_id: string
+        }
+        Insert: {
+          id?: string
+          last_supplied?: string | null
+          raw_material_id: string
+          unit_price: number
+          vendor_id: string
+        }
+        Update: {
+          id?: string
+          last_supplied?: string | null
+          raw_material_id?: string
+          unit_price?: number
+          vendor_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "vendor_products_raw_material_id_fkey"
+            columns: ["raw_material_id"]
+            isOneToOne: false
+            referencedRelation: "raw_materials"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "vendor_products_vendor_id_fkey"
+            columns: ["vendor_id"]
+            isOneToOne: false
+            referencedRelation: "vendors"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      vendors: {
+        Row: {
+          address: string | null
+          contact: string | null
+          created_at: string
+          id: string
+          name: string
+        }
+        Insert: {
+          address?: string | null
+          contact?: string | null
+          created_at?: string
+          id?: string
+          name: string
+        }
+        Update: {
+          address?: string | null
+          contact?: string | null
+          created_at?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
