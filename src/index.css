@@ -43,10 +43,17 @@ All colors MUST be HSL.
     --gradient-primary: linear-gradient(135deg, hsl(42 85% 85%), hsl(45 75% 78%));
     --gradient-warm: linear-gradient(180deg, hsl(45 35% 96%), hsl(45 25% 88%));
     --gradient-accent: linear-gradient(135deg, hsl(25 28% 22%), hsl(20 25% 28%));
+    --gradient-hero: linear-gradient(135deg, hsl(42 85% 85%) 0%, hsl(45 75% 78%) 50%, hsl(38 70% 72%) 100%);
 
     /* Bakery Shadows */
     --shadow-warm: 0 8px 25px -8px hsl(42 85% 85% / 0.4);
     --shadow-elegant: 0 10px 30px -10px hsl(25 28% 22% / 0.2);
+    --shadow-soft: 0 4px 12px -4px hsl(25 28% 22% / 0.1);
+    --shadow-glow: 0 0 20px hsl(42 85% 85% / 0.3);
+
+    /* Animation Variables */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 45 40% 98%;
     --sidebar-foreground: 25 28% 22%;
@@ -92,10 +99,13 @@ All colors MUST be HSL.
     --gradient-primary: linear-gradient(135deg, hsl(42 85% 85%), hsl(38 70% 75%));
     --gradient-warm: linear-gradient(180deg, hsl(25 18% 12%), hsl(25 12% 18%));
     --gradient-accent: linear-gradient(135deg, hsl(42 85% 85%), hsl(45 75% 78%));
+    --gradient-hero: linear-gradient(135deg, hsl(42 85% 85%) 0%, hsl(38 70% 75%) 50%, hsl(35 65% 70%) 100%);
 
     /* Dark Bakery Shadows */
     --shadow-warm: 0 8px 25px -8px hsl(42 85% 85% / 0.3);
     --shadow-elegant: 0 10px 30px -10px hsl(42 85% 85% / 0.15);
+    --shadow-soft: 0 4px 12px -4px hsl(42 85% 85% / 0.1);
+    --shadow-glow: 0 0 20px hsl(42 85% 85% / 0.25);
 
     --sidebar-background: 25 18% 12%;
     --sidebar-foreground: 45 35% 96%;
@@ -115,5 +125,47 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .shadow-warm {
+    box-shadow: var(--shadow-warm);
+  }
+  
+  .shadow-elegant {
+    box-shadow: var(--shadow-elegant);
+  }
+  
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+  
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  
+  .bg-gradient-warm {
+    background: var(--gradient-warm);
+  }
+  
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+  
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+  
+  .text-gradient {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 }
