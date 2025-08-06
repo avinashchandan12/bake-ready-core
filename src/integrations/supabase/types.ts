@@ -38,6 +38,54 @@ export type Database = {
         }
         Relationships: []
       }
+      loss_logs: {
+        Row: {
+          created_at: string
+          estimated_cost: number | null
+          id: string
+          loss_date: string
+          loss_reason: string | null
+          product_id: string | null
+          quantity_lost: number
+          raw_material_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          estimated_cost?: number | null
+          id?: string
+          loss_date?: string
+          loss_reason?: string | null
+          product_id?: string | null
+          quantity_lost: number
+          raw_material_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          estimated_cost?: number | null
+          id?: string
+          loss_date?: string
+          loss_reason?: string | null
+          product_id?: string | null
+          quantity_lost?: number
+          raw_material_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_loss_logs_product"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_loss_logs_raw_material"
+            columns: ["raw_material_id"]
+            isOneToOne: false
+            referencedRelation: "raw_materials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       product_raw_materials: {
         Row: {
           id: string
@@ -105,6 +153,99 @@ export type Database = {
             columns: ["product_id"]
             isOneToOne: false
             referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      production_log_materials: {
+        Row: {
+          cost_per_unit: number | null
+          created_at: string
+          id: string
+          production_log_id: string
+          quantity_used: number
+          raw_material_id: string
+        }
+        Insert: {
+          cost_per_unit?: number | null
+          created_at?: string
+          id?: string
+          production_log_id: string
+          quantity_used: number
+          raw_material_id: string
+        }
+        Update: {
+          cost_per_unit?: number | null
+          created_at?: string
+          id?: string
+          production_log_id?: string
+          quantity_used?: number
+          raw_material_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_production_log_materials_log"
+            columns: ["production_log_id"]
+            isOneToOne: false
+            referencedRelation: "production_logs"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_production_log_materials_raw_material"
+            columns: ["raw_material_id"]
+            isOneToOne: false
+            referencedRelation: "raw_materials"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      production_logs: {
+        Row: {
+          created_at: string
+          id: string
+          operator_notes: string | null
+          product_id: string
+          production_cost: number | null
+          production_date: string
+          quantity: number
+          recipe_id: string | null
+          time_spent_mins: number | null
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          operator_notes?: string | null
+          product_id: string
+          production_cost?: number | null
+          production_date?: string
+          quantity: number
+          recipe_id?: string | null
+          time_spent_mins?: number | null
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          operator_notes?: string | null
+          product_id?: string
+          production_cost?: number | null
+          production_date?: string
+          quantity?: number
+          recipe_id?: string | null
+          time_spent_mins?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_production_logs_product"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_production_logs_recipe"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
             referencedColumns: ["id"]
           },
         ]
@@ -264,6 +405,83 @@ export type Database = {
         }
         Relationships: []
       }
+      recipe_ingredients: {
+        Row: {
+          created_at: string
+          id: string
+          quantity: number
+          raw_material_id: string
+          recipe_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          quantity: number
+          raw_material_id: string
+          recipe_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          quantity?: number
+          raw_material_id?: string
+          recipe_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_recipe_ingredients_raw_material"
+            columns: ["raw_material_id"]
+            isOneToOne: false
+            referencedRelation: "raw_materials"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_recipe_ingredients_recipe"
+            columns: ["recipe_id"]
+            isOneToOne: false
+            referencedRelation: "recipes"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      recipes: {
+        Row: {
+          created_at: string
+          id: string
+          instructions: string | null
+          product_id: string
+          time_required_mins: number
+          updated_at: string
+          yield_quantity: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          instructions?: string | null
+          product_id: string
+          time_required_mins?: number
+          updated_at?: string
+          yield_quantity?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          instructions?: string | null
+          product_id?: string
+          time_required_mins?: number
+          updated_at?: string
+          yield_quantity?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_recipes_product"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       sales: {
         Row: {
           created_at: string
@@ -367,7 +585,15 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_production_estimate: {
+        Args: { recipe_id_param: string }
+        Returns: {
+          can_produce: number
+          limiting_material: string
+          available_quantity: number
+          required_quantity: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
