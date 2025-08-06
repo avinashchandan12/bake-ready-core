@@ -11,6 +11,10 @@ import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
 import RawMaterials from "./pages/RawMaterials";
 import StockOverview from "./pages/StockOverview";
+import Recipes from "./pages/Recipes";
+import ProductionLog from "./pages/ProductionLog";
+import ProductionEstimator from "./pages/ProductionEstimator";
+import LossLog from "./pages/LossLog";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -43,6 +47,26 @@ const App = () => (
             <Route path="/stock-overview" element={
               <ProtectedRoute>
                 <StockOverview />
+              </ProtectedRoute>
+            } />
+            <Route path="/recipes" element={
+              <ProtectedRoute>
+                <Recipes />
+              </ProtectedRoute>
+            } />
+            <Route path="/production-log" element={
+              <ProtectedRoute>
+                <ProductionLog />
+              </ProtectedRoute>
+            } />
+            <Route path="/production-estimator" element={
+              <ProtectedRoute>
+                <ProductionEstimator />
+              </ProtectedRoute>
+            } />
+            <Route path="/loss-log" element={
+              <ProtectedRoute>
+                <LossLog />
               </ProtectedRoute>
             } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
