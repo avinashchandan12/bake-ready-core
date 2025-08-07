@@ -151,6 +151,34 @@ const Dashboard = () => {
           </Card>
 
           <Card className="hover:shadow-md transition-shadow cursor-pointer">
+            <Link to="/orders">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <ShoppingCart className="h-5 w-5" />
+                  Order Management
+                </CardTitle>
+                <CardDescription>
+                  Manage client orders and track deliveries
+                </CardDescription>
+              </CardHeader>
+            </Link>
+          </Card>
+
+          <Card className="hover:shadow-md transition-shadow cursor-pointer">
+            <Link to="/clients">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Users className="h-5 w-5" />
+                  Client Management
+                </CardTitle>
+                <CardDescription>
+                  Manage client relationships and billing
+                </CardDescription>
+              </CardHeader>
+            </Link>
+          </Card>
+
+          <Card className="hover:shadow-md transition-shadow cursor-pointer">
             <Link to="/raw-materials">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -159,6 +187,20 @@ const Dashboard = () => {
                 </CardTitle>
                 <CardDescription>
                   Manage inventory and stock levels
+                </CardDescription>
+              </CardHeader>
+            </Link>
+          </Card>
+
+          <Card className="hover:shadow-md transition-shadow cursor-pointer">
+            <Link to="/vendors">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <TrendingUp className="h-5 w-5" />
+                  Vendor Management
+                </CardTitle>
+                <CardDescription>
+                  Manage supplier relationships and purchases
                 </CardDescription>
               </CardHeader>
             </Link>

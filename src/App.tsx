@@ -17,6 +17,9 @@ import Recipes from "./pages/Recipes";
 import ProductionLog from "./pages/ProductionLog";
 import ProductionEstimator from "./pages/ProductionEstimator";
 import LossLog from "./pages/LossLog";
+import Orders from "./pages/Orders";
+import Clients from "./pages/Clients";
+import Vendors from "./pages/Vendors";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -115,6 +118,21 @@ function AppContent() {
                 <Route path="/loss-log" element={
                   <ProtectedRoute>
                     <LossLog />
+                  </ProtectedRoute>
+                } />
+                <Route path="/orders" element={
+                  <ProtectedRoute>
+                    <Orders />
+                  </ProtectedRoute>
+                } />
+                <Route path="/clients" element={
+                  <ProtectedRoute>
+                    <Clients />
+                  </ProtectedRoute>
+                } />
+                <Route path="/vendors" element={
+                  <ProtectedRoute>
+                    <Vendors />
                   </ProtectedRoute>
                 } />
                 <Route path="*" element={<NotFound />} />
