@@ -44,6 +44,42 @@ export type Database = {
         }
         Relationships: []
       }
+      discrepancies: {
+        Row: {
+          created_at: string
+          discrepancy_quantity: number
+          discrepancy_type: string
+          expected_quantity: number
+          grn_id: string
+          id: string
+          note: string | null
+          raw_material_id: string
+          received_quantity: number
+        }
+        Insert: {
+          created_at?: string
+          discrepancy_quantity?: number
+          discrepancy_type?: string
+          expected_quantity?: number
+          grn_id: string
+          id?: string
+          note?: string | null
+          raw_material_id: string
+          received_quantity?: number
+        }
+        Update: {
+          created_at?: string
+          discrepancy_quantity?: number
+          discrepancy_type?: string
+          expected_quantity?: number
+          grn_id?: string
+          id?: string
+          note?: string | null
+          raw_material_id?: string
+          received_quantity?: number
+        }
+        Relationships: []
+      }
       expenses: {
         Row: {
           amount: number
@@ -65,6 +101,75 @@ export type Database = {
           date?: string
           id?: string
           remarks?: string | null
+        }
+        Relationships: []
+      }
+      grn_items: {
+        Row: {
+          created_at: string
+          expected_quantity: number
+          grn_id: string
+          id: string
+          raw_material_id: string
+          received_quantity: number
+          total_price: number
+          unit_price: number
+        }
+        Insert: {
+          created_at?: string
+          expected_quantity?: number
+          grn_id: string
+          id?: string
+          raw_material_id: string
+          received_quantity?: number
+          total_price?: number
+          unit_price?: number
+        }
+        Update: {
+          created_at?: string
+          expected_quantity?: number
+          grn_id?: string
+          id?: string
+          raw_material_id?: string
+          received_quantity?: number
+          total_price?: number
+          unit_price?: number
+        }
+        Relationships: []
+      }
+      grns: {
+        Row: {
+          created_at: string
+          grn_date: string
+          grn_number: string
+          id: string
+          notes: string | null
+          status: string
+          total_amount: number
+          updated_at: string
+          vendor_id: string
+        }
+        Insert: {
+          created_at?: string
+          grn_date?: string
+          grn_number: string
+          id?: string
+          notes?: string | null
+          status?: string
+          total_amount?: number
+          updated_at?: string
+          vendor_id: string
+        }
+        Update: {
+          created_at?: string
+          grn_date?: string
+          grn_number?: string
+          id?: string
+          notes?: string | null
+          status?: string
+          total_amount?: number
+          updated_at?: string
+          vendor_id?: string
         }
         Relationships: []
       }
@@ -696,6 +801,66 @@ export type Database = {
           },
         ]
       }
+      transport_clients: {
+        Row: {
+          client_id: string
+          created_at: string
+          delivery_address: string | null
+          delivery_status: string
+          id: string
+          transport_log_id: string
+        }
+        Insert: {
+          client_id: string
+          created_at?: string
+          delivery_address?: string | null
+          delivery_status?: string
+          id?: string
+          transport_log_id: string
+        }
+        Update: {
+          client_id?: string
+          created_at?: string
+          delivery_address?: string | null
+          delivery_status?: string
+          id?: string
+          transport_log_id?: string
+        }
+        Relationships: []
+      }
+      transport_logs: {
+        Row: {
+          cost: number
+          created_at: string
+          driver_name: string | null
+          id: string
+          notes: string | null
+          transport_date: string
+          updated_at: string
+          vehicle_no: string
+        }
+        Insert: {
+          cost?: number
+          created_at?: string
+          driver_name?: string | null
+          id?: string
+          notes?: string | null
+          transport_date?: string
+          updated_at?: string
+          vehicle_no: string
+        }
+        Update: {
+          cost?: number
+          created_at?: string
+          driver_name?: string | null
+          id?: string
+          notes?: string | null
+          transport_date?: string
+          updated_at?: string
+          vehicle_no?: string
+        }
+        Relationships: []
+      }
       vendor_products: {
         Row: {
           id: string
@@ -764,6 +929,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      detect_grn_discrepancies: {
+        Args: { grn_id_param: string }
+        Returns: undefined
+      }
+      generate_grn_number: {
+        Args: Record<PropertyKey, never>
+        Returns: string
+      }
       generate_invoice_number: {
         Args: Record<PropertyKey, never>
         Returns: string

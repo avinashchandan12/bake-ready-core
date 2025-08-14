@@ -20,6 +20,9 @@ import LossLog from "./pages/LossLog";
 import Orders from "./pages/Orders";
 import Clients from "./pages/Clients";
 import Vendors from "./pages/Vendors";
+import GRNEntry from "./pages/GRNEntry";
+import DiscrepancyReport from "./pages/DiscrepancyReport";
+import TransportLog from "./pages/TransportLog";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -133,6 +136,21 @@ function AppContent() {
                 <Route path="/vendors" element={
                   <ProtectedRoute>
                     <Vendors />
+                  </ProtectedRoute>
+                } />
+                <Route path="/grn-entry" element={
+                  <ProtectedRoute>
+                    <GRNEntry />
+                  </ProtectedRoute>
+                } />
+                <Route path="/discrepancy-report" element={
+                  <ProtectedRoute>
+                    <DiscrepancyReport />
+                  </ProtectedRoute>
+                } />
+                <Route path="/transport-log" element={
+                  <ProtectedRoute>
+                    <TransportLog />
                   </ProtectedRoute>
                 } />
                 <Route path="*" element={<NotFound />} />

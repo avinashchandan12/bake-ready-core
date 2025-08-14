@@ -7,7 +7,11 @@ import {
   Calculator, 
   AlertTriangle, 
   BarChart3,
-  LogOut 
+  LogOut,
+  Truck,
+  FileText,
+  MapPin,
+  Users
 } from "lucide-react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
@@ -39,6 +43,18 @@ const productionItems = [
   { title: "Production Log", url: "/production-log", icon: ClipboardList },
   { title: "Production Estimator", url: "/production-estimator", icon: Calculator },
   { title: "Loss & Waste Log", url: "/loss-log", icon: AlertTriangle },
+];
+
+const orderItems = [
+  { title: "Orders", url: "/orders", icon: ShoppingCart },
+  { title: "Clients", url: "/clients", icon: Users },
+  { title: "Vendors", url: "/vendors", icon: Truck },
+];
+
+const grnItems = [
+  { title: "GRN Entry", url: "/grn-entry", icon: FileText },
+  { title: "Discrepancy Report", url: "/discrepancy-report", icon: AlertTriangle },
+  { title: "Transport Log", url: "/transport-log", icon: MapPin },
 ];
 
 export function AppSidebar() {
@@ -109,6 +125,52 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {productionItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <NavLink 
+                      to={item.url} 
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${getNavCls(isActive(item.url))}`}
+                    >
+                      <item.icon className="h-4 w-4 flex-shrink-0" />
+                      {!collapsed && <span className="font-medium">{item.title}</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground mb-2">
+            {!collapsed ? "Order Management" : "ORD"}
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {orderItems.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <NavLink 
+                      to={item.url} 
+                      className={`flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${getNavCls(isActive(item.url))}`}
+                    >
+                      <item.icon className="h-4 w-4 flex-shrink-0" />
+                      {!collapsed && <span className="font-medium">{item.title}</span>}
+                    </NavLink>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground mb-2">
+            {!collapsed ? "GRN & Transport" : "GRN"}
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {grnItems.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <NavLink 
