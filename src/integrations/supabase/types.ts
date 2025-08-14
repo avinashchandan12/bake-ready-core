@@ -7,7 +7,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "13.0.4"
@@ -771,11 +771,15 @@ export type Database = {
       get_production_estimate: {
         Args: { recipe_id_param: string }
         Returns: {
+          available_quantity: number
           can_produce: number
           limiting_material: string
-          available_quantity: number
           required_quantity: number
         }[]
+      }
+      is_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
       }
     }
     Enums: {
