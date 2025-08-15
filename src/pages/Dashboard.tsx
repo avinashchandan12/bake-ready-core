@@ -6,19 +6,12 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Package, ShoppingCart, TrendingUp, Users, LogOut } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer, PieChart, Pie, Cell, LineChart, Line } from 'recharts';
 
 interface DashboardStats {
   totalProducts: number;
   totalRawMaterials: number;
   todayProduction: number;
   lowStockItems: number;
-}
-
-interface ChartData {
-  weeklyProduction: Array<{ day: string; production: number }>;
-  stockDistribution: Array<{ name: string; value: number; color: string }>;
-  monthlyTrends: Array<{ month: string; orders: number; production: number }>;
 }
 
 const Dashboard = () => {
@@ -29,16 +22,10 @@ const Dashboard = () => {
     todayProduction: 0,
     lowStockItems: 0,
   });
-  const [chartData, setChartData] = useState<ChartData>({
-    weeklyProduction: [],
-    stockDistribution: [],
-    monthlyTrends: []
-  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchDashboardStats();
-    generateChartData();
   }, []);
 
   const fetchDashboardStats = async () => {
@@ -64,37 +51,6 @@ const Dashboard = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  const generateChartData = () => {
-    // Generate sample data - in real app, this would come from Supabase
-    const weeklyProduction = [
-      { day: 'Mon', production: 120 },
-      { day: 'Tue', production: 98 },
-      { day: 'Wed', production: 135 },
-      { day: 'Thu', production: 110 },
-      { day: 'Fri', production: 145 },
-      { day: 'Sat', production: 180 },
-      { day: 'Sun', production: 95 }
-    ];
-
-    const stockDistribution = [
-      { name: 'High Stock', value: 45, color: 'hsl(var(--primary))' },
-      { name: 'Medium Stock', value: 35, color: 'hsl(var(--secondary))' },
-      { name: 'Low Stock', value: 15, color: 'hsl(var(--destructive))' },
-      { name: 'Out of Stock', value: 5, color: 'hsl(var(--muted))' }
-    ];
-
-    const monthlyTrends = [
-      { month: 'Jan', orders: 45, production: 120 },
-      { month: 'Feb', orders: 52, production: 135 },
-      { month: 'Mar', orders: 48, production: 128 },
-      { month: 'Apr', orders: 61, production: 155 },
-      { month: 'May', orders: 55, production: 142 },
-      { month: 'Jun', orders: 67, production: 168 }
-    ];
-
-    setChartData({ weeklyProduction, stockDistribution, monthlyTrends });
   };
 
   const handleSignOut = async () => {
@@ -174,93 +130,6 @@ const Dashboard = () => {
                 )}
               </div>
               <p className="text-xs text-muted-foreground">Items need reorder</p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <Card>
-            <CardHeader>
-              <CardTitle>Weekly Production</CardTitle>
-              <CardDescription>Production output for the current week</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={chartData.weeklyProduction}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="day" />
-                  <YAxis />
-                  <Bar dataKey="production" fill="hsl(var(--primary))" radius={[4, 4, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Stock Distribution</CardTitle>
-              <CardDescription>Current inventory status breakdown</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={chartData.stockDistribution}
-                    cx="50%"
-                    cy="50%"
-                    innerRadius={60}
-                    outerRadius={100}
-                    paddingAngle={5}
-                    dataKey="value"
-                  >
-                    {chartData.stockDistribution.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.color} />
-                    ))}
-                  </Pie>
-                </PieChart>
-              </ResponsiveContainer>
-              <div className="flex flex-wrap gap-2 mt-4">
-                {chartData.stockDistribution.map((entry, index) => (
-                  <div key={index} className="flex items-center gap-1">
-                    <div 
-                      className="w-3 h-3 rounded-full" 
-                      style={{ backgroundColor: entry.color }}
-                    ></div>
-                    <span className="text-xs text-muted-foreground">{entry.name}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="lg:col-span-2">
-            <CardHeader>
-              <CardTitle>Monthly Trends</CardTitle>
-              <CardDescription>Orders vs Production comparison over last 6 months</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <ResponsiveContainer width="100%" height={300}>
-                <LineChart data={chartData.monthlyTrends}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="month" />
-                  <YAxis />
-                  <Line 
-                    type="monotone" 
-                    dataKey="orders" 
-                    stroke="hsl(var(--primary))" 
-                    strokeWidth={3}
-                    dot={{ fill: 'hsl(var(--primary))', strokeWidth: 2, r: 4 }}
-                  />
-                  <Line 
-                    type="monotone" 
-                    dataKey="production" 
-                    stroke="hsl(var(--secondary))" 
-                    strokeWidth={3}
-                    dot={{ fill: 'hsl(var(--secondary))', strokeWidth: 2, r: 4 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
             </CardContent>
           </Card>
         </div>
